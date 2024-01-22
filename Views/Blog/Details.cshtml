@@ -1,0 +1,59 @@
+﻿@model OnlineMarket.Models.Post
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string url = $"/tin-tuc-{Model.Alias}/{Model.PostId}.html";
+    List<OnlineMarket.Models.Post> BaiVietLienQuan = ViewBag.BaiVietLienQuan;
+    List<OnlineMarket.Models.Product> lsnewproducts = ViewBag.AllNewProducts;
+
+}
+@section metatags{
+    <meta name="twitter:card" content="summary"></meta>
+    <meta name="twitter:description" content=@Model.Contents />
+    <meta name="twitter:title" content="@Model.Title" />
+    <meta name="twitter:image" content="http://tudang-001-site1.atempurl.com/images/news/@Model.Thumb" />
+
+}
+<div class="ontainer container">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="/blogs.html">Blog</a></li>
+    </ul>
+    
+    <div class="row"> 
+            <!--Left Part Start -->
+        <aside class="col-sm-4 col-md-3" id="column-left">
+            <div class="module latest-product titleLine">
+                <div class="blog-header" itemprop="name">
+                    <h3>@Model.Title</h3>
+                </div>
+                <div class="article-sub-title" itemprop="dateCreated">
+                    <span class="article-date">Ngày tạo: @Model.CreateDate.Value.ToShortDateString()</span>
+                </div>
+                <div class="image-popup">
+                    <a href="/images/news/@Model.Thumb">
+                        <img style="display:block; margin-left:auto; margin-right:auto;" itemprop="image" src="~/images/news/@Model.Thumb">
+                     </a>
+                </div>
+            </div>
+        </aside>
+        
+        <!--Middle Part Start-->
+        <div id="content" class="col-lg-9 col-md-8" itemscope itemtype="http://schema.org/Blog">           
+            <div class="article-info" style="text-align:justify;">     
+                <div class="article-description" itemprop="description">
+                    <p>@Html.Raw(@Model.Contents)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Middle Part End-->
+</div>
+@section Scripts{
+    <script>
+        $(function() {
+            $('div.image-popup').magnificPopup({delegate: 'a', type: 'image' });
+        })
+    </script>
+}

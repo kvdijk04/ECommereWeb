@@ -1,0 +1,183 @@
+﻿@model OnlineMarket.Models.Customer
+
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<OnlineMarket.Models.Order> DanhSachDonHang = ViewBag.DonHang;
+    OnlineMarket.ModelViews.ChangePasswordViewModel changepassword = new OnlineMarket.ModelViews.ChangePasswordViewModel();
+}
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<!-- Main Container  -->
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="">Tài khoản</a></li>
+        <li><a href="/tai-khoan-cua-toi.html">Tài khoản của tôi</a></li>
+    </ul>
+
+    <div class="row">
+        <!--Middle Part Start-->
+
+        <div class="col-sm-9" id="content">
+            <h2 class="title">Thông tin tài khoản</h2>
+            <p class="lead">Xìn chào, <strong>@Model.FullName</strong></p>
+            <p>
+                <a href="/dang-xuat.html">Đăng xuất</a>
+            </p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <fieldset id="personal-details">
+                        <legend>Thông tin cá nhân</legend>
+                        <div class="form-group required">
+                            <label for="input-firstname" class="control-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="input-firstname" value="@Model.FullName" name="FullName">
+                        </div>
+                        <div class="form-group required">
+                            <label for="input-email" class="control-label">E-Mail</label>
+                            <input type="email" class="form-control" id="input-email" value="@Model.Email" name="Email">
+                        </div>
+                        <div class="form-group required">
+                            <label for="input-telephone" class="control-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="input-telephone" value="@Model.Phone" name="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-fax" class="control-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="input-fax" value="@Model.Address" name="Address">
+                        </div>
+                    </fieldset>
+                    <br>
+                </div>
+                <div class="col-sm-6">
+                    <form asp-controller="Accounts" asp-action="ChangePassword" method="post">
+                        @await Html.PartialAsync("_ChangeInfomationPartialView", changepassword)
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Middle Part End-->
+        <!--Right Part Start -->
+        <aside class="col-sm-3 hidden-xs" id="column-right">
+            <h2 class="subtitle">Account</h2>
+            <div class="list-group">
+                <ul class="list-item">
+                    @*<li><a href="#">Forgotten Password</a>*@
+                    </li>
+                    <li>
+                        <a href="/tai-khoan-cua-toi.html">Tài khoản của tôi</a>
+                    </li>
+                    </li>
+                    <li>
+                        <a href="/dang-xuat.html">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <!--Right Part End -->
+    </div>
+</div>
+<!-- Main Container  -->
+<div class="tainer container">
+    <ul class="breadcrumb">
+        <li><a href="">Tài khoản</a></li>
+        <li><a href="">Lịch sử đơn hàng</a></li>
+    </ul>
+    <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-9">
+            <h2 class="title">Danh sách đơn hàng</h2>
+            @if (DanhSachDonHang != null && DanhSachDonHang.Count() > 0)
+            {
+                <div class="table-responsive" style="overflow-y:scroll; max-height:300px">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-center">ID</td>
+                                <td class="text-left">Ngày</td>
+                                <td class="text-center">Ngày vận chuyển</td>
+                                <td class="text-center">Trạng thái</td>
+                                <td class="text-center">Xem chi tiết</td>
+                                <td class="text-center">#</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in DanhSachDonHang)
+                            {
+                                <tr>
+                                    <td class="text-center"><a class="account-order-id" href="javascript:void(0)">@item.OrderId</a></td>
+                                    <td class="text-center">@item.OrderDate</td>
+                                    <td class="text-center">@item.ShipDate</td>
+                                    <td class="text-center">@item.TransactStatus.Status</td>
+                                    <!--<td class="text-right"> @item.OrderDetails.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.Quantity.Value : x.product.Price.Value * x.Quantity.Value).ToString("#,##0") VNĐ</td>-->
+                                    <td class="text-center">
+                                        <a class="xemdonhang" href="javascript:void(0)" data-madonhang="@item.OrderId">Xem đơn hàng</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="xemdonhang" data-madonhang="@item.OrderId" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            
+            else
+            {
+                <h2 class="title">Chưa có đơn hàng nào</h2>
+            }
+        </div>
+        <div id="records_table"></div>
+        <!---//Middle Part End-->
+    </div>
+</div>
+</div>
+<!-- //Main Container
+<!-- //Main Container -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".xemdonhang").click(function () {
+                var madonhang = $(this).attr("data-madonhang")
+                $.ajax({
+                    url: '/DonHang/Details',
+                    datatype: "json",
+                    type: "POST",
+                    data: { id: madonhang },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}

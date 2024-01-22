@@ -1,0 +1,81 @@
+﻿@model OnlineMarket.ModelViews.XemDonHang
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+@if (Model != null)
+{
+    <table class="table table-bordered table-hover">
+        <h3>Thông tin đơn hàng: #@Model.DonHang.OrderId</h3>
+        <br />
+        <p>Ngày đặt hàng: @Model.DonHang.OrderDate</p>
+        <p>Trạng thái đơn hàng: @Model.DonHang.TransactStatus.Status</p>
+        <p style="font-weight:bold;">Tổng tiền: @Model.ChiTietDonHang.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.Quantity.Value : x.product.Price.Value * x.Quantity.Value).ToString("#,##0") VNĐ</p>
+        <p>Ngày ship hàng: @Model.DonHang.ShipDate</p>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Ảnh sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col"> Thành tiền</th>
+                <!--<th scope="col">Tổng tiền</th>-->
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ChiTietDonHang != null)
+            {
+                @foreach (var item in Model.ChiTietDonHang)
+                {
+                    <tr>
+                        <th scope="col">#@item.OrderDetailId</th>
+                        <th>@item.product.ProductName</th>
+                        <th><img src="~/images/products/@item.product.Thumb" width="151px" height="201px" /></th>
+                        <th>@item.Quantity</th>
+                        <th>
+                            @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                            {
+                                <span class="amount">@((item.product.Discount.Value).ToString("#,##0")) VNĐ</span>
+                                <br>
+                                <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@item.product.Price.Value.ToString("#,##0") VNĐ</span>
+                            }
+                            else
+                            {
+                                <span class="amount">@((item.product.Price.Value).ToString("#,##0")) VNĐ</span>
+                            }
+                        </th>
+                        <th>
+                             @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                             {
+                                  <span class="amount">@((item.product.Discount.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                                  <br>
+                                  <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@((item.product.Price.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                             }
+                             else
+                             {
+                                 <span class="amount">@((item.product.Price.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                             }
+                        </th>
+                        
+                        @if (item == Model.ChiTietDonHang.Last())
+                        {
+                           
+                          <!--<th colspan="@Model.ChiTietDonHang.Count()" style="vertical-align: middle;">@Model.ChiTietDonHang.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.Quantity.Value : x.product.Price.Value * x.Quantity.Value).ToString("#,##0") VNĐ</th>-->
+                        }
+                       
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

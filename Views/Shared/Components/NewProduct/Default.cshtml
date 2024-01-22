@@ -1,0 +1,37 @@
+﻿@model List<OnlineMarket.Models.Product>
+@if (Model != null)
+{
+     <div class="modcontent ">
+        @foreach(var item in Model)
+        {
+                            string url = $"/{item.Alias}-{item.ProductId}";
+                            string urld = $"san-pham/xem-nhanh/{item.Alias}-{item.ProductId}";
+            <div class="product-latest-item">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="@url"><img src="~/images/products/@item.Thumb" alt="@item.Title" title="@item.Title" class="img-responsive" style="width: 80px; height: 100px;"></a>
+                    </div>
+                    <div class="media-body">
+                        <div class="caption">
+                            <h4><a href="@url">@item.ProductName</a></h4>
+
+                            <div class="price">
+                                <span class="price-new">@item.Price.Value.ToString("#,##0")</span>
+                            </div>
+                            <div class="ratings">
+                                <div class="rating-box">
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>    
+}

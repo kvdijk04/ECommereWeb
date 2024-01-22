@@ -1,0 +1,417 @@
+﻿@model OnlineMarket.Models.Product
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<OnlineMarket.Models.Product> lsProducts = ViewBag.SanPham;
+    List<OnlineMarket.Models.Comment> lsComments = ViewBag.AllComments;
+
+}
+@section metatags{
+    <!-- COMMON TAGS -->
+    <!-- Search Engine -->
+    <meta name="description" content="@Model.ShortDesc">
+    <meta name="image" content="http://tudang-001-site1.atempurl.com/images/products/@Model.Thumb">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="@Model.ProductName">
+    <meta itemprop="description" content="@Model.ShortDesc">
+    <meta itemprop="image" content="http://tudang-001-site1.atempurl.com/images/products/@Model.Thumb">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="@Model.Title">
+    <meta name="twitter:description" content="@Model.ShortDesc">
+    <meta name="twitter:image:src" content="http://tudang-001-site1.atempurl.com/images/products/@Model.Thumb">
+    <!-- Twitter - Product (e-commerce) -->
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="@Model.Title">
+    <meta name="og:description" content="@Model.ShortDesc">
+    <meta name="og:image" content="http://tudang-001-site1.atempurl.com/images/products/@Model.Thumb">
+    <meta name="og:url" content="http://tudang-001-site1.atempurl.com/@Model.Alias-@Model.ProductId">
+    <meta name="og:site_name" content="http://tudang-001-site1.atempurl.com/@Model.Alias-@Model.ProductId">
+    <meta name="fb:admins" content="122426577171395">
+    <meta name="og:type" content="website">
+    <!-- Open Graph - Product (e-commerce) -->
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:image" content="http://tudang-001-site1.atempurl.com/images/products/@Model.Thumb" />
+    <meta property="og:description" content="@Model.ShortDesc" />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/@Model.Alias-@Model.ProductId" />
+    <meta property="og:type" content="website">
+
+}
+<link rel="stylesheet" type="text/css" />
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="shop.html"><i class="fa fa-home"></i></a></li>
+        <li><a href="/@Model.Cat.Alias">@Model.Cat.CatName</a></li>
+        <li><a href="">@Model.ProductName</a></li>
+
+    </ul>
+
+    <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-md-12 col-sm-12">
+            <div class="product-view row" itemscope itemtype="http://schema.org/Product">
+                <div class="left-content-product col-lg-10 col-xs-12">
+                    <div class="row">
+                        @if (Model.UnitslnStock > 0)
+                        {
+                        <div class="content-product-left class-honizol col-sm-6 col-xs-12 ">
+                            <div class="large-image">
+                                <a href="/images/products/@Model.Thumb">
+                                    <img itemprop="image" class="product-image-zoom" src="~/images/products/@Model.Thumb"  title="@Model.ProductName" alt="@Model.ProductName">
+                                </a> 
+                            </div>
+                        </div>
+
+                        <div class="content-product-right col-sm-6 col-xs-12">
+                            <div class="title-product" itemprop="name">
+                                <h1>@Model.ProductName</h1>
+                            </div>
+                            <!-- Review ---->
+                            <div class="box-review form-group">
+                                <div class="ratings">
+                                    <div class="rating-box" itemprop="aggregateRating"
+                                         itemscope itemtype="https://schema.org/AggregateRating">
+
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    </div>
+                                </div>	|
+                                <a class="write_review_button" href="" onclick="$('a[href=\'#reviews\']').trigger('click'); return false;">Write a review</a>
+                            </div>
+
+                            <div class="product-label form-group">
+                                <!-- if have se price show -->
+                                    @if (Model.Discount > 0)
+                                    {
+                                        <div class="product_page_price price" itemscope itemtype="http://schema.org/Offer">
+                                            <span class="label label-percent" style="font-size:20px;">@Model.Discount.Value.ToString("#,##0") VNĐ</span>
+                                            <span class="price-old">@Model.Price.Value.ToString("#,##0") VNĐ</span>
+                                        </div>
+                                    }
+                                    else{
+                                        <div class="product_page_price price" itemscope itemtype="http://schema.org/Offer">
+                                            <span class="price-new" itemprop="price">@Model.Price.Value.ToString("#,##0") VNĐ</span>
+                                        </div>
+                                    }
+                                
+                                <div class="stock"><span>Trạng thái: </span> <span class="status-stock" href="https://schema.org/InStock">Còn hàng</span><br /></div>
+
+                            </div>
+
+                            <div class="product-box-desc">
+                                <div class="inner-box-desc">
+                                    <div class="price-tax"><span>Danh mục: </span><a href="/@Model.Cat.Alias" itemprop="url"><span itemprop="category">@Model.Cat.CatName</span></a></div>
+                                    <div class="price-tax"><span>Mô tả ngắn: </span><span itemprop="description">@Model.ShortDesc</span></div>
+                                </div>
+                            </div>
+                            <div id="product">
+                                <h4>
+                                    Tùy chọn có sẵn
+                                </h4>
+                                <div class="form-group box-info-product">
+                                    <div class="option quantity">
+                                        <div class="quantity">
+                                            <div class="input-group quantity-control" unselectable="on" style="-webkit-user-select: none;">
+                                                <label>Qty </label>
+                                                <input id="txtsoLuong" name="txtsoLuong" class="form-control" value="1" type="text">
+                                                @*  <input class="form-control" type="text" name="quantity" value="1" />
+                                                    <input type="hidden" name="product_id" value="50" />*@
+                                                <span class="input-group-addon product_quantity_down">− </span>
+                                                <span class="input-group-addon product_quantity_up">+ </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cart">
+                                        <div class="add-to-cart">
+                                            <input type="button" data-toggle="tooltip" title="" value="Thêm vào giỏ hàng" class="btn btn-mega btn-lg" data-original-title="Add to Cart" />
+                                            <input hidden asp-for="ProductId" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- end box info product -->
+                            @*<div class="fb-share-button"
+                                     data-href="http://footballshop.com/@Model.ProductName-@Model.ProductId "
+                                     data-layout="button_count">
+                                </div>*@
+                            <div class="sharethis-inline-share-buttons"></div>
+                        </div>
+                        }
+                        else if (Model.UnitslnStock == 0)
+                        {
+                        <div class="content-product-left class-honizol col-sm-6 col-xs-12 ">
+                            <div class="soldout-image ">
+                                 <a class="sold_out">Hết Hàng</a>
+                                <img itemprop="image" class="product-image-zoom-soldout" src="~/images/products/@Model.Thumb"  title="@Model.ProductName" alt="@Model.ProductName">
+                            </div>
+                        </div>
+                        <div class="content-product-right col-sm-6 col-xs-12">
+                            <div class="title-product">
+                                <h1 itemprop="name">@Model.ProductName</h1>
+                            </div>
+                            <!-- Review ---->
+                            <div class="box-review form-group">
+                                <div class="ratings">
+                                    <div class="rating-box" itemprop="aggregateRating"
+                                         itemscope itemtype="https://schema.org/AggregateRating">
+
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    </div>
+                                </div>	|
+                                <a class="write_review_button" href="" onclick="$('a[href=\'#reviews\']').trigger('click'); return false;">Write a review</a>
+                            </div>
+
+                            <div class="product-label form-group">
+                                    @if (Model.Discount > 0)
+                                    {
+                                        <div class="product_page_price price" itemscope itemtype="http://schema.org/Offer">
+                                            <span class="label label-percent" style="font-size:20px;">@Model.Discount.Value.ToString("#,##0") VNĐ</span>
+                                            <span class="price-old">@Model.Price.Value.ToString("#,##0") VNĐ</span>
+                                        </div>
+                                    }
+                                    else{
+                                        <div class="product_page_price price" itemscope itemtype="http://schema.org/Offer">
+                                            <span class="price-new" itemprop="price">@Model.Price.Value.ToString("#,##0") VNĐ</span>
+                                        </div>
+                                    }
+                                    <div class="stock">
+                                        <span>Trạng thái: </span>  <span class="status-out-of-stock" style="color:red; font-weight:bold;" >Hết hàng</span><br /></div>
+                                    </div>
+                            <div class="product-box-desc">
+                                <div class="inner-box-desc">
+                                    <div class="price-tax"><span>Danh mục: </span><a href="/@Model.Cat.Alias" itemprop="url"><span itemprop="category">@Model.Cat.CatName</span></a></div>
+                                    <div class="price-tax"><span>Mô tả ngắn: </span><span itemprop="description">@Model.ShortDesc</span></div>
+                                </div>
+                            </div>
+                            <div id="product">
+                                <h4>
+                                    Tùy chọn có sẵn
+                                </h4>
+                                <div class="form-group box-info-product">
+                                    <div class="option quantity">
+                                        <div class="quantity">
+                                            <div class="input-group quantity-control" unselectable="on" style="-webkit-user-select: none;">
+                                                <label>Qty </label>
+                                                <input id="txtsoLuong" name="txtsoLuong" class="form-control" value="1" type="text" disabled >
+                                                @*<input class="form-control" type="text" name="quantity" value="1" />
+                                                  <input type="hidden" name="product_id" value="50" />*@
+                                                <span class="input-group-addon product_quantity_down">− </span>
+                                                <span class="input-group-addon product_quantity_up">+ </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cart">
+                                        <div class="add-to-cart">
+                                            <input type="button" data-toggle="tooltip" title="" value="Hết hàng" class="btn btn-mega btn-lg" data-original-title="Add to Cart" disabled />
+                                            <input hidden asp-for="ProductId" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- end box info product -->
+                            @*<div class="fb-share-button"
+                                     data-href="http://footballshop.com/@Model.ProductName-@Model.ProductId "
+                                     data-layout="button_count">
+                                </div>*@
+                            <div class="sharethis-inline-share-buttons"></div>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Tabs -->
+        <div class="producttab ">
+            <div class="tabsslider  vertical-tabs col-xs-12">
+                <ul class="nav nav-tabs col-lg-2 col-sm-3">
+                    <li class="active"><a data-toggle="tab" href="#tab-1">Mô tả sản phẩm</a></li>
+                    <li class="item_nonactive"><a data-toggle="tab" href="#reviews">Reviews</a></li>
+                    <li class="item_nonactive"><a data-toggle="tab" href="#tab-4">Mạng xã hội</a></li>
+                    <li class="item_nonactive"><a data-toggle="tab" href="#tab-5">Thông tin mua hàng</a></li>
+                </ul>
+                <div class="tab-content col-lg-10 col-sm-9 col-xs-12">
+                    <div id="tab-1" class="tab-pane fade active in">
+                        @Html.Raw(Model.Description)
+                    </div>
+                    <div class="tab-pane fade" id="reviews">
+                        @await Html.PartialAsync("_ListReviewPartialView", lsComments)
+                    </div>
+                    <div id="tab-4" class="tab-pane fade">
+                        <div class="fb-comments" data-href="http://tudang-001-site1.atempurl.com/@Model.Alias-@Model.ProductId" data-width="100%" data-numposts="5"></div>
+                    </div>
+                    <div id="tab-5" class="tab-pane fade">
+                        <a href="#">ttmh</a>,
+                        <a href="#">ttmh</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Product Tabs -->
+        <!-- Related Products -->
+        <div class="related titleLine products-list grid module ">
+            <h3 class="modtitle">Sản phẩm tương tự </h3>
+            <div class="releate-products " itemscope itemtype="https://schema.org/ItemList">
+                @if (lsProducts != null)
+                {
+                    foreach (var item in lsProducts)
+                    {
+                        string url = $"/{item.Alias}-{item.ProductId}";
+                        string urld = $"san-pham/xem-nhanh/{item.Alias}-{item.ProductId}";
+
+                <div class="product-layout" itemscope itemtype="http://schema.org/Product">
+                    <div class="product-item-container">
+                        <div class="left-block">
+                             @if (item.BestSeller == true)
+                             {
+                                 <span class="label label-sale">Bán chạy</span>
+                             }
+                             else
+                             {
+                                  <div class="review-status ps-2 text-danger"></div>
+                             }
+                            <div class="product-image-container second_img ">
+                            @if (item.UnitslnStock == 0)
+                            {
+                                <span class="sold_out" style="font-size: 3em">Hết Hàng</span>
+                                <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img-responsive" style="backgorund black; opacity:0.5;" />
+                                <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img_0 img-responsive"  style="backgorund black; opacity:0.5;" />
+                            }
+                            else{
+                                 <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img-responsive" />
+                                 <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img_0 img-responsive" />
+                             }
+                            </div>
+
+                            <!--full quick view block-->
+                            @*<a class="quickview iframe-link visible-lg" data-fancybox-type="iframe" href="@urld" itemprop="url">  Quickview</a>*@
+                            <!--end full quick view block-->
+                        </div>
+                        <div class="right-block">
+                            <div class="caption">
+                                <h4><a href="@url" itemprop="name">@item.ProductName</a></h4>
+                                <div class="ratings">
+                                    <div class="rating-box" itemprop="aggregateRating"
+                                         itemscope itemtype="https://schema.org/AggregateRating">
+                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    </div>
+                                </div>
+
+                                 <div class="price">
+                                     @if (item.Discount > 0  && item.Discount < item.Price)
+                                     {
+                  
+                                        <span class="label label-percent">@item.Discount.Value.ToString("#,##0") VNĐ</span>
+                                        <span class="price-old">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                     }
+                                     else{
+                                         <div class="price" itemscope itemtype="http://schema.org/Offer">
+                                         <span class="price-new" itemprop="price">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                         </div>
+                                     }
+                                               
+                                 </div>
+                            </div>
+
+                            <div class="button-group">
+                                <button class="addToCart" type="button" data-toggle="tooltip" title="Thêm sản phẩm" onclick="window.location.href='@url'" itemprop="url"><i class="fa fa-shopping-cart"></i> <span class="">Thêm sản phẩm</span></button>
+                                <button class="wishlist" type="button" data-toggle="tooltip" title="Add to Wish List" onclick="wishlist.add('42');"><i class="fa fa-heart"></i></button>
+                                <button class="compare" type="button" data-toggle="tooltip" title="Compare this Product" onclick="compare.add('42');"><i class="fa fa-exchange"></i></button>
+                            </div>
+                        </div><!-- right block -->
+
+                    </div>
+                </div>
+
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- end Related  Products-->
+
+
+    </div>
+
+
+</div>
+<!--Middle Part End-->
+	</div>
+<!-- Begin Main Content Area  -->
+<!-- Main Content Area End Here  -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".add-to-cart").click(function () {
+                    var productid = $('#ProductId').val();
+                    var soLuong = $('#txtsoLuong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productID: productid,
+                            quantity: soLuong
+                        },
+                        success: function (response) {
+                            loadHeaderCart();
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert("Có lỗi khi chuyển dữ liệu đến server " + error.responseText);
+                        }
+                    });
+                });
+
+            });
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart");
+                $("#numberCart").load("/AjaxContent/NumberCart");
+            }
+
+        });
+        $(function() {
+            $('div.large-image').magnificPopup({delegate: 'a', type: 'image' });
+        })
+    </script>
+}
+
+<style>
+    .sold_out{
+    font-weight: bolder;
+    color: #F4A137;
+    font-size: 5em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .product-image-zoom-soldout{
+        background: black;
+        opacity: 0.5;
+    }
+
+</style>

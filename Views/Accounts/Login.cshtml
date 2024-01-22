@@ -1,0 +1,136 @@
+﻿@model OnlineMarket.ModelViews.LoginViewModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<!-- Main Container  -->
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="/tai-khoan-cua-toi.html">Tài khoản</a></li>
+        <li><a href="dang-nhap.html">Đăng nhập</a></li>
+    </ul>
+
+    <div class="row">
+        <div id="content" class="col-sm-12">
+            <div class="page-login">
+
+                <div class="account-border">
+                    <div class="row">
+                        <div class="col-sm-6 new-customer">
+                            <div class="well">
+                                <h2><i class="fa fa-file-o" aria-hidden="true"></i> Khách hàng mới</h2>
+                                <p>Bằng cách tạo tài khoản, bạn sẽ có thể mua sắm nhanh hơn, cập nhật trạng thái đơn hàng và theo dõi các đơn hàng bạn đã thực hiện trước đó.</p>
+                            </div>
+                            <div class="bottom-form">
+                                <a href="dang-ky.html" class="btn btn-default pull-right">Tiếp tục</a>
+                            </div>
+                        </div>
+
+                        <form asp-action="Login">
+                            <input hidden asp-for="ReturnUrl" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-sm-6 customer-login">
+                                <div class="well">
+                                    <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Đã có tài khoản</h2>
+                                    <div class="form-group">
+                                        <label class="control-label " for="input-email">Tài khoản E-Mail</label>
+                                        <input type="email" asp-for="UserName" placeholder="Địa chỉ Email" class="form-control">
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label " for="input-password">Mật khẩu</label>
+                                        <input type="password" asp-for="Password" placeholder="Mật khẩu" class="form-control">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="bottom-form">
+                                    <input type="submit" value="Đăng nhập" class="btn btn-default pull-right" />
+                                    @*<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                                        </fb:login-button>
+
+                                        <div id="status">
+                                        </div>
+                                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>*@
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Main Container -->
+@*<script>
+
+        function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+            console.log('statusChangeCallback');
+            console.log(response);                   // The current login status of the person.
+            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+                testAPI();
+            } else {                                 // Not logged into your webpage or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this webpage.';
+            }
+        }
+
+
+        function checkLoginState() {               // Called when a person is finished with the Login Button.
+            FB.getLoginStatus(function (response) {   // See the onlogin handler
+                statusChangeCallback(response);
+            });
+        }
+
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '3962818990610291',
+                cookie: true,                     // Enable cookies to allow the server to access the session.
+                xfbml: true,                     // Parse social plugins on this webpage.
+                version: 'v14.0'           // Use this Graph API version for this call.
+            });
+
+
+            FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+                statusChangeCallback(response);        // Returns the login status.
+            });
+        };
+
+        function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+                console.log('Successful login for: ' + response.name);
+                document.getElementById('status').innerHTML =
+                    'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+
+
+    </script>*@

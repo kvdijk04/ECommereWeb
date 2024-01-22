@@ -1,0 +1,19 @@
+﻿@model List<OnlineMarket.ModelViews.CartItem>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="shopcart" >
+        <span class="handle pull-left"></span>
+        <span class="title">Giỏ hàng </span>
+        <p class="text-shopping-cart cart-total-full">@Model.Count() sản phẩm </p>
+    </div>
+}
+else
+{
+
+    <div class="shopcart" >
+        <span class="handle pull-left"></span>
+        <span class="title">Giỏ hàng</span>
+        <p class="text-shopping-cart cart-total-full">0 sản phẩm </p>
+    </div>
+}

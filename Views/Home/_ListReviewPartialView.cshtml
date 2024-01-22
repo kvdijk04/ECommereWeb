@@ -1,0 +1,89 @@
+﻿@model List<OnlineMarket.Models.Comment>
+
+<div class="product-review-body">
+    <h4 class="heading mb-5">@Model.Count() Review Items</h4>
+    <ul class="user-info-wrap"itemscope itemtype="https://schema.org/Review">
+
+        @if (Model != null && Model.Count() > 0)
+        {
+            
+            @foreach (var item in Model)
+            {
+               
+                <li>
+                    <ul class="user-info">
+                        <li class="user-avatar">
+                            <img itemprop="image" src="~/assets/images/testimonial/user/1.png" alt="User Image">
+                        </li>
+                        <li class="user-comment" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                            @if (item.Rating >= 9)
+                            {
+                                <div class="rating-box">
+                                    <ul itemprop="bestRating">
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (item.Rating > 6 && item.Rating <= 8)
+                            {
+                                <div class="rating-box" >
+                                    <ul itemprop="bestRating">
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (item.Rating >= 5 && item.Rating <= 6)
+                            {
+                                <div class="rating-box" >
+                                    <ul itemprop="ratingValue">
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (item.Rating < 5 && item.Rating >= 3)
+                            {
+                                <div class="rating-box" >
+                                    <ul itemprop="ratingCount">
+                                        <li><i class="pe-7s-star"></i></li>
+                                        <li><i class="pe-7s-star"></i></li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (item.Rating < 3)
+                            {
+                                <div class="rating-box">
+                                    <ul itemprop="ratingCount">
+                                        <li><i class="pe-7s-star"></i></li>
+                                    </ul>
+                                </div>
+                            }
+                            <div class="meta">
+                                <span><strong itemprop="author">@item.FullName -</strong><p itemprop="datePublished">@item.CommentedOn</p></span>
+                            </div>
+                            <p class="short-desc mb-0" itemprop="reviewBody">
+                                @item.CommentDescription
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+    </ul>
+    <div class="button-wrap mt-8">
+        <button type="submit" value="submit" class="btn btn-custom-size lg-size btn-secondary btn-primary-hover btn-lg rounded-0" name="submit"
+         onclick="window.location= '@Url.Action( "Create", "Comments")'"
+          >Create review</button>
+    </div>
+</div>
+
+
+

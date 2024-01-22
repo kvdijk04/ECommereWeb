@@ -1,0 +1,23 @@
+﻿@using OnlineMarket.Models
+@model List<Comment>
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th scope="row">@item.CommentId</th>
+            <td>@item.FullName</td>
+            <td>@item.Phone</td>
+            <th scope="row">@item.Email</th>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Rating /10</td>
+            <th scope="row">@item.CommentedOn</th>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CommentId" class="btn btn-primary btn-tone m-r-5">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CommentId" class="btn btn-secondary btn-tone m-r-5">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CommentId" class="btn btn-danger btn-tone m-r-5">Delete</a>
+            </td>
+        </tr>
+    }
+}

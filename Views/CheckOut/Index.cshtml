@@ -1,0 +1,364 @@
+﻿@model OnlineMarket.ModelViews.MuaHangVM
+@{
+    ViewData["Title"] = "Mua Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<OnlineMarket.ModelViews.CartItem> Carts = ViewBag.GioHang;
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+@section Styles {
+    <style type="text/css">
+        .nice-select .list {
+            border-radius: 0px;
+            overflow-y: auto;
+            overflow: hidden;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        .nice-select .option:hover, .nice-select .option:focus, .nice-select .option.selected.focus {
+            color: red;
+            background: none;
+        }
+           .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg1.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+<!-- Main Container  -->
+<div class="">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="checkout.html">Checkout</a></li>
+
+    </ul>
+    <form asp-controller="CheckOut" asp-action="Index" method="post">
+        <input hidden asp-for="CustomerId" />
+        <div class="row">
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-12">
+                <h2 class="title">Checkout</h2>
+
+                <div class="so-onepagecheckout ">
+                    <div class="col-left col-sm-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-user"></i> Thông tin cá nhân</h4>
+                            </div>
+                            <div class="panel-body">
+                                <fieldset id="account">
+                                    <div class="form-group required">
+                                        <label for="input-payment-firstname" class="control-label">Họ và tên</label>
+                                        <input asp-for="FullName" placeholder="Họ và tên" type="text" class="form-control" />
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="input-payment-email" class="control-label">E-Mail</label>
+                                        <input asp-for="Email" placeholder="Email" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="input-payment-telephone" class="control-label">Số điện thoại</label>
+                                        <input asp-for="Phone" placeholder="Số điện thoại" type="text" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-book"></i> Địa chỉ giao hàng</h4>
+                            </div>
+                            <div class="panel-body">
+
+
+                                <div class="required">
+                                    <div class="form-group required">
+                                        <label for="input-payment-city" class="control-label">Địa chỉ</label>
+                                        <input asp-for="Address" placeholder="Địa chỉ" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="TinhThanh" class="control-label">Tỉnh/Thành</label>
+                                        <select required asp-for="TinhThanh" class="myniceselect nice-select wide" asp-items="ViewBag.lsTinhThanh">
+                                            <option value="0" disabled selected>Tỉnh / Thành </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="QuanHuyen" class="control-label">Quận/Huyện</label>
+                                        <select required asp-for="QuanHuyen" class="myniceselect wide" asp-items="ViewBag.lsQuanHuyen">
+                                            <option value="0" disabled selected>Quận / Huyện </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="PhuongXa" class="control-label">Phường/Xã</label>
+                                        <select required asp-for="PhuongXa" class="myniceselect nice-select wide" asp-items="ViewBag.lsPhuongXa">
+                                            <option value="0" disabled selected>Phường / Xã </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-right col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default no-padding">
+                                    <div class="col-sm-6  checkout-payment-methods">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><i class="fa fa-credit-card"></i> Hình thức thanh toán</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>Vui lòng chọn hình thức thanh toán cho đơn hàng này</p>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="MoMo" onclick="location.href='@Url.Action("Payment", "ShoppingCart")'">
+                                                </label>
+                                                <img src="~/assets/MoMo_Logo.png" width="80px" height="80px" style="cursor:pointer" onclick="location.href='@Url.Action("Payment", "ShoppingCart")'" />
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="PayPal" onclick="location.href='@Url.Action("PaypalCheckout", "Checkout")'">
+                                                </label>
+                                                <img src="~/assets/PayPal_Logo.png" width="80px" height="80px" style="cursor:pointer" onclick="location.href='@Url.Action("PaypalCheckout", "Checkout")'" />
+                                            </div>
+                                            <a asp-action="VnPayPayment" asp-controller="CheckOut">BNPAY</a>
+                                            <div class="radio">
+
+                                                <label>
+                                                    <input type="radio" id="Stripe" onclick="location.href='stripe.html'">
+                                                </label>
+                                                <img src="~/assets/Stripe-Payment-Logo.png" width="150px" height="150px" style="cursor:pointer" onclick="window.location.href='stripe.html'" />
+                                            </div>
+                                            <div class="radio">
+                                                <input type="submit" class="btn btn-primary" id="button-confirm" value="Xác nhận đặt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><i class="fa fa-shopping-cart"></i>Thông tin đon hàng</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        @if (Carts.Count() > 0)
+                                        {
+                                            foreach (var item in Carts)
+                                            {
+                                                string url = $"/{item.product.Alias}-{item.product.ProductId}";
+                                                <thead>
+                                                    <tr>
+                                                        <td class="text-center">Hình ảnh</td>
+                                                        <td class="text-left" style="text-align:center;">Tên sản phẩm</td>
+                                                        <td class="text-left" style="text-align:center;">Số lượng</td>
+                                                        <td class="text-right" style="text-align:center;">Đơn giá</td>
+                                                        <td class="text-right" style="text-align:center;">Thành tiền</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <td class="text-center"><a href="@url"><img width="60px" src="~/images/products/@item.product.Thumb" alt="Xitefun Causal Wear Fancy Shoes" title="@item.product.Title" class="img-thumbnail"></a></td>
+                                                <td class="text-left"><a href="@url">@item.product.ProductName</a></td>
+                                                <td class="text-left">
+                                                    <div class="quantity" style="min-width: 100px;">
+                                                        <input width="50px" data-mahh="@item.product.ProductId" data-dongia="@item.product.Price" class="cartItem form-control" value="@item.quantity" min="1" type="number" readonly>
+                                                    </div>
+                                                </td>
+                                                <td class="product-price" style="text-align:center; font-weight:bold;">
+                                                    @if(item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                                    {
+                                                        <span class="amount">@item.product.Discount.Value.ToString("#,##0") VNĐ</span>
+                                                        <br>
+                                                        <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@item.product.Price.Value.ToString("#,##0") VNĐ</span>
+                                                    }
+                                                    else{
+                                                        <span class="amount">@item.product.Price.Value.ToString("#,##0") VNĐ</span>
+                                                    }
+
+                                                </td>
+                                                 <td class="product-subtotal" style="text-align:center; font-weight:bold;">
+                                                    @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                                    {
+                                                        <span class="amount">@((item.product.Discount.Value * item.quantity).ToString("#,##0")) VNĐ</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="amount">@((item.product.Price.Value * item.quantity).ToString("#,##0")) VNĐ</span>
+                                                    }
+                                                </td>
+
+                                                </tbody>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Chưa có sản phẩm</p>
+                                        }
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-right" colspan="4">
+                                                    <strong>Sub-Total:</strong>
+                                                </td>
+                                                <!--<td class="text-right">@Carts.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ</td>-->
+                                                <td class="text-right" style="font-weight:bold;">
+                                                    @if (Carts != null && Carts.Count() > 0)
+                                                    {
+                                                        <span class="amount">@Carts.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity).ToString("#,##0") VNĐ</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" colspan="4">
+                                                    <strong>Total:</strong>
+                                                </td>
+                                                <!---<td class="text-right">@Carts.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ</td>-->
+                                                 <td class="text-right" style="font-weight:bold;">
+                                                    @if (Carts != null && Carts.Count() >0 )
+                                                    {
+                                                        <span class="amount">@Carts.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity).ToString("#,##0") VNĐ</span>
+                                                    }
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            @*<div class="panel-heading">
+                                    <h4 class="panel-title"><i class="fa fa-pencil"></i> Add Comments About Your Order</h4>
+                                </div>
+                                    <div class="panel-body">
+                                    <textarea rows="4" class="form-control" id="confirm_comment" name="comments"></textarea>
+                                    <br>
+                                    <label class="control-label" for="confirm_agree">
+                                        <input type="checkbox" checked="checked" value="1" required="" class="validate required" id="confirm_agree" name="confirm agree">
+                                        <span>I have read and agree to the <a class="agree" href="#"><b>Terms &amp; Conditions</b></a></span> </label>*@
+                            @*                            <div class="buttons" id="btncash">
+                                    <div class="pull-right">
+                                        <input type="submit" class="btn btn-primary" id="button-confirm" value="XÁC NHẬN ĐẶT">
+                                    </div>
+                                    <div class="pull-right">
+                                        <img src="~/assets/MoMo_Logo.png" width="80px" height="80px" onclick="location.href='@Url.Action("Payment", "ShoppingCart")'" style="cursor:pointer"/>
+
+                                    </div>
+                                    <div class="pull-right">
+                                        <img src="~/assets/PayPal_Logo.png" width="80px" height="80px" onclick="location.href='@Url.Action("PaypalCheckout", "ShoppingCart")'" style="cursor:pointer" />
+
+                                    </div>
+                                    <div class="pull-right">
+                                        <img src="~/assets/Stripe_Logo.png" width="80px" height="80px" onclick="window.location.href='/create-checkout-session.html'" style="cursor:pointer" />
+
+                                    </div>
+                                </div>*@
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$('select').niceSelect();
+            //$(function () {
+            //    $("#TinhThanh").change(function () {
+            //        var locationid = $("#TinhThanh").val();
+            //        $.ajax({
+            //            url: '/Location/QuanHuyenList',
+            //            type: "GET",
+            //            dataType: "JSON",
+            //            data: { locationId: locationid },
+            //            success: function (QuanHuyens) {
+            //                $('#QuanHuyen').empty();
+            //                $('#PhuongXa').empty();
+            //                var strPhuongXa = '<option value="" disabled selected>Phường / Xã</option>';
+            //                $('#PhuongXa').append(strPhuongXa);
+            //                var strQuanHuyen = '<option value="" disabled selected>Quận / Huyện</option>';
+            //                $('#QuanHuyen').append(strQuanHuyen);
+            //                $.each(QuanHuyens, function (i, item) {
+            //                    var option = '<option value="' + item.locationId + '">' + item.nameWithType + '</option>';
+            //                    $('#QuanHuyen').append(option);
+            //                });
+            //                $('select').niceSelect('update');
+
+            //            }
+            //        });
+            //    });
+
+            //    $("#QuanHuyen").change(function () {
+            //        var locationid = $("#QuanHuyen").val();
+            //        $.ajax({
+            //            url: '/Location/PhuongXaList',
+            //            type: "GET",
+            //            dataType: "JSON",
+            //            data: { locationId: locationid },
+            //            success: function (PhuongXaList) {
+            //                $('#PhuongXa').empty();
+            //                var readonly = '<option value="" disabled selected>Phường / Xã</option>';
+            //                $('#PhuongXa').append(readonly);
+            //                $.each(PhuongXaList, function (i, item) {
+            //                    var option = '<option value="' + item.locationId + '">' + item.nameWithType + '</option>';
+            //                    $('#PhuongXa').append(option);
+            //                });
+            //                $('select').niceSelect('update');
+
+            //            }
+            //        });
+            //    });
+            //});
+            $("#Stripe").change(function () {
+                if (this.checked) {
+                    $("#PayPal").prop({ disabled: false, checked: false });
+                    $("#MoMo").prop({ disabled: false, checked: false });
+
+                }
+
+            });
+            $("#MoMo").change(function () {
+                if (this.checked) {
+
+                    $("#PayPal").prop({ disabled: false, checked: false });
+                    $("#Stripe").prop({ disabled: false, checked: false });
+                }
+
+            });
+            $("#PayPal").change(function () {
+                if (this.checked) {
+                    $("#MoMo").prop({ disabled: false, checked: false });
+                    $("#Stripe").prop({ disabled: false, checked: false });
+
+                }
+
+            });
+
+        });
+    </script>
+
+}

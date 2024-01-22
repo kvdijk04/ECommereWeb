@@ -1,0 +1,155 @@
+﻿@model OnlineMarket.Models.Order
+
+@{
+    ViewData["Title"] = "Thông tin đơn hàng : "+ Model.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List <OnlineMarket.Models.OrderDetail> orderDetails = ViewBag.Chitiet;
+}
+<div class="page-container">
+
+
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="page-header">
+          
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a   asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+                    <a class="breadcrumb-item"  asp-area="Admin" asp-controller="AdminOrders" asp-action="Index">Danh sách đơn hàng</a>
+                    <span class="breadcrumb-item active">Thông tin đơn hàng</span>
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                   
+                    <div id="invoice" class="p-h-30">
+                       
+                        <div class="row  ">
+                            <div class="col-sm-8">
+                                <div class="text-dark text-uppercase d-inline-block">
+                                    <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                                </div>
+                                <img class="img-fluid" src="assets/images/logo/logo.png" alt="">
+                                <address class="p-l-10 m-t-10">
+                                    <span class="font-weight-semibold text-dark">Tên người nhận: @Model.Customer.FullName</span><br>
+                                    <span>Địa chỉ: @ViewBag.FullAdress</span><br>
+                                    <span>Email: @Model.Customer.Email</span><br>
+                                    <abbr class="text-dark" title="Phone" style="text-decoration:none;">Số điện thoại:</abbr>
+                                    <span>@Model.Customer.Phone</span>
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <div>
+                                    <div class="text-dark text-uppercase d-inline-block">
+                                        <h3>THÔNG TIN MUA HÀNG</h3>
+                                    </div>
+                                    <div class="float-right">#@Model.OrderId</div>
+                                </div>
+                                <div class="text-dark  d-inline-block m-t-10">
+                                    <span class="font-weight-semibold text-dark">Ngày mua: <a>@Model.OrderDate</a> </span>
+                                     
+                                </div>
+                               
+                                <div class="text-dark  d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Ngày giao: @Model.ShipDate</span>
+                                   
+                                </div>
+                                
+                                <br />
+                                <div class="text-dark d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Trạng thái đơn hàng: @Model.TransactStatus.Status</span>
+                                </div>
+             
+
+                            </div>
+                        </div>
+                        <div class="m-t-20">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Thứ tự</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (orderDetails != null && orderDetails.Count() > 0)
+                                        {
+                                            int i = 1;
+                                            @foreach (var item in orderDetails)
+                                            {
+                                                string url = $"/{item.product.Alias}-{item.product.ProductId}";
+                                                <tr>
+                                                    <th>@i</th>
+                                                    <td><a target="_blank" href="@url">@item.product.ProductName</a></td>
+                                                    <td>@item.Quantity</td>
+                                                    <td>
+                                                        @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                                        {
+                                                            <span class="amount">@((item.product.Discount.Value).ToString("#,##0")) VNĐ</span>
+                                                            <br>
+                                                            <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@item.product.Price.Value.ToString("#,##0") VNĐ</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="amount">@((item.product.Price.Value).ToString("#,##0")) VNĐ</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                                        {
+                                                            <span class="amount">@((item.product.Discount.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                                                            <br>
+                                                            <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@((item.product.Price.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="amount">@((item.product.Price.Value * item.Quantity.Value).ToString("#,##0")) VNĐ</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row m-t-30 lh-1-8">
+                                <div class="col-sm-12">
+                                    <div class="float-right text-right">
+                                        <h3><span class="font-weight-semibold text-dark">Tổng tiền :
+                                        @if (orderDetails != null && orderDetails.Count() > 0)
+                                        {
+                                            <span class="amount"> @orderDetails.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price.Value ? x.product.Discount.Value * x.Quantity.Value : x.product.Price.Value * x.Quantity.Value).ToString("#,##0") VNĐ</span>
+                                        }
+                                        </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content Wrapper END -->
+    <!-- Footer START -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="m-b-0">Copyright © 2019 Theme_Nate. All rights reserved.</p>
+            <span>
+                <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
+                <a href="" class="text-gray">Privacy &amp; Policy</a>
+            </span>
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+</div>

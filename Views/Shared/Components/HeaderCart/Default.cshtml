@@ -1,0 +1,109 @@
+﻿@model List<OnlineMarket.ModelViews.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+    <li>
+        <table class="table table-striped">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string url = $"/{item.product.Alias}-{item.product.ProductId}";
+                    <tr>
+                        <td class="text-center" style="width:70px">
+                            <a href="product.html"> <img src="~/images/products/@item.product.Thumb" style="width:70px" alt="Filet Mign" title="@item.product.ProductName" class="preview"> </a>
+                        </td>
+                        <td class="text-left"> <a class="cart_product_name" href="@url">@item.product.ProductName</a> </td>
+                        <td class="text-center"> x @item.quantity </td>
+                        <td class="text-center"> 
+                            @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                            {
+                                <span class="amount">@((item.product.Discount.Value * item.quantity).ToString("#,##0")) VNĐ</span>
+                                <br>
+                                <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@item.product.Price.Value.ToString("#,##0") VNĐ</span>
+                            }
+                            else
+                            {
+                                <span class="amount">@((item.product.Price.Value * item.quantity).ToString("#,##0")) VNĐ</span>
+                            }
+                        </td>
+                        <td class="text-right">
+                            <a href="product.html" class="fa fa-edit"></a>
+                        </td>
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </li>
+    <li>
+        <div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="text-left">
+                            <strong>Sub-Total</strong>
+                        </td>
+                        <td class="text-right">
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                <span class="amount">@Model.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity).ToString("#,##0") VNĐ</span>
+                            }
+                            else
+                            {
+                                <span class="amount">0 VNĐ</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-right">
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                 <span class="amount">@Model.Sum(x => x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity).ToString("#,##0") VNĐ</span>
+                            }
+                            else
+                            {
+                                  <span class="amount">0 VNĐ</span>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @*<p class="text-right"> <a class="btn view-cart" href="cart.html"><i class="fa fa-shopping-cart"></i>View Cart</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="checkout.html"><i class="fa fa-share"></i>Checkout</a> </p>*@
+        </div>
+    </li>
+}
+
+else
+{
+    <li>
+        <table class="table table-striped">
+            <tbody>
+                <h3>Giỏ hàng rỗng</h3>
+            </tbody>
+        </table>
+    </li>
+    <li>
+        <div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="text-left">
+                            <strong>Sub-Total</strong>
+                        </td>
+                        <td class="text-right">0 VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-right">0 VNĐ</td>
+                    </tr>
+                </tbody>
+            </table>
+            @*<p class="text-right"> <a class="btn view-cart" href="cart.html"><i class="fa fa-shopping-cart"></i>View Cart</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="checkout.html"><i class="fa fa-share"></i>Checkout</a> </p>*@
+        </div>
+    </li>
+}

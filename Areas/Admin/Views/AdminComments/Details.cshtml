@@ -1,0 +1,56 @@
+﻿@model OnlineMarket.Models.Comment
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="product-info-table m-t-20">
+                    <tbody>
+                        <tr>
+                            <td>ID:</td>
+                            <td class="text-dark font-weight-semibold">@Model.CommentId</td>
+                        </tr>
+                        <tr>
+                            <td>Tên:</td>
+                            <td>@Model.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Số điện thoại:</td>
+                            <td>@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Tên sản phẩm:</td>
+                            <td>@Model.Product.ProductName</td>
+                        </tr>
+
+                        <tr>
+                            <td>Mô tả chi tiết:</td>
+                            <td>@Html.Raw(Model.CommentDescription)</td>
+                        </tr>
+                        <tr>
+                            <td>Đánh giá:</td>
+                            <td>@Model.Rating</td>
+                        </tr>
+                        <tr>
+                            <td>Ngày viết:</td>
+                            <td>@Model.CommentedOn</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,1255 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<OnlineMarket.Models.Product>
+@{
+    ViewData["Title"] = "Shop - " + ViewBag.CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int PageCurrent = ViewBag.CurrentPage;
+    int PageNext = ViewBag.CurrentPage + 1;
+    List<OnlineMarket.Models.Product> lsnewproducts = ViewBag.AllNewProducts;
+
+}
+@section Styles {
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<!-- Begin Main Content Area -->
+<link rel="stylesheet" type="text/css" />
+<main class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="">Tất cả sản phẩm</a></li>
+    </ul>
+    <div class="row">
+       <div id="content" class="col-md-9 col-sm-8">
+          <div class="products-list row grid" id="records_table">
+              <div class="products-list row grid">
+                   <div itemscope itemtype="https://schema.org/ItemList">
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            int count = Model.TotalItemCount;
+                            <h3 class="title-category" style="margin-left:15px;">Có @count sản phẩm </h3>
+                        
+                            @foreach (var item in Model)
+                            {  
+                                string url = $"/{item.Alias}-{item.ProductId}";
+                                string urld = $"san-pham/xem-nhanh/{item.Alias}-{item.ProductId}";
+                                <div class="product-layout col-md-4 col-sm-6 col-xs-12" itemscope itemtype="http://schema.org/Product">
+                                    <div class="product-item-container" id="pi">
+                                        <div class="left-block">
+                                            @if (item.BestSeller == true)
+                                            {
+                                                <span class="label label-sale">Bán chạy</span>
+                                            }
+                                            else
+                                            {
+                                                <div class="review-status ps-2 text-danger"></div>
+                                            }
+                                        
+                                            @if (item.UnitslnStock == 0)
+                                            {
+                                                <span class="sold_out">Hết Hàng</span>
+                                                <a href="@url" itemprop="url">
+                                               
+                                                    <img itemprop="image" style="width: 100%; height:280px; backgorund black; opacity:0.5;" class="product-image-container lazy second_img" src="~/images/products/@item.Thumb" alt="@item.Title">
+                                                </a>
+                                            }
+                                            else{
+                                                <a href="@url" itemprop="url">
+                                                    <img itemprop="image" style="width: 100%; height:280px" class="product-image-container lazy second_img" src="~/images/products/@item.Thumb" alt="@item.Title">
+                                                </a>
+                                            }
+                                            <!--full quick view block-->
+                                        
+                                            @*<a class="quickview iframe-link visible-lg" data-fancybox-type="iframe" href="@url" itemprop="url">Xem chi tiết</a>*@
+                                        </div>                                  
+                                        <div class="right-block">
+                                            <div class="caption">
+                                                <h4><a href="@url" itemprop="url"><span itemprop="name">@item.ProductName</span></a></h4>
+                                                <div class="ratings">
+                                                    <div class="rating-box">
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="price">
+                                                    @if (item.Discount > 0)
+                                                    {
+                  
+                                                        <span class="label label-percent">@item.Discount.Value.ToString("#,##0") VNĐ</span>
+                                                        <span class="price-old">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                                    }
+                                                    else{
+                                                        <div class="price" itemscope itemtype="http://schema.org/Offer">
+                                                            <span class="price-new" itemprop="price">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                                        </div>
+                                                    }                                              
+                                                </div>
+                                                <div class="description item-desc hidden">
+                                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est . </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="button-group">
+                                                <button class="addToCart" type="button" data-toggle="tooltip" title="Thêm sản phẩm" onclick="window.location.href='@url'"><i class="fa fa-shopping-cart"></i> <span class="">Thêm sản phẩm</span></button>
+                                                <button class="wishlist" type="button" data-toggle="tooltip" title="Sản phẩm yêu thích" @* onclick="wishlist.add('42');"*@><i class="fa fa-heart"></i></button>
+                                                <button class="compare" type="button" data-toggle="tooltip" title="So sánh sản phẩm"><i class="fa fa-exchange"></i></button>
+                                            </div>
+                                        </div><!-- right block -->
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">
+                                <strong>Không có sản phẩm nào trong mục này!</strong>
+                            </div>
+                        }
+                   </div>
+              </div> 
+              <div class="product-filter product-filter-bottom filters-panel">
+                    <div class="row">
+                        <div class="col-md-2 hidden-sm hidden-xs">
+                        </div>
+                        <div class="pagination-area pt-10">
+                            <ul class="pagination justify-content-center">
+                                <pager class="pager-container" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" list="@Model" asp-action="Index"></pager>
+                            </ul>
+                        </div>
+                    </div>
+              </div>
+          </div>        
+       </div>        
+        <!--Right Part Start -->
+        <aside class="col-sm-4 col-md-3" id="column-left">
+            <div class="module latest-product titleLine">
+                <h3 class="modtitle">Lọc </h3>
+                <div class="modcontent ">
+                    <form class="type_2">
+                        <div class="table_layout filter-shopby">
+                            <div class="table_row">
+                                <!-- - - - - - - - - - - - - - Category filter - - - - - - - - - - - - - - - - -->
+                                <div class="table_cell" style="z-index: 103;">
+                                    <legend>Tìm kiếm</legend>
+                                    <input id="keyword" name="keyword" class="form-control" type="text" value="" autocomplete="off" placeholder="Tìm kiếm theo tên hoặc dòng giày">
+                                </div><!--/ .table_cell -->
+                                <!-- - - - - - - - - - - - - - Khoảng giá - - - - - - - - - - - - - - - - -->
+                                <div class="table_cell">
+                                    <fieldset>
+                                        <legend>Khoảng giá</legend>
+                                        <ul class="checkboxes_list">
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="refine-item1">
+                                                <label class="label-checkbox mb-0" for="refine-item1">
+                                                    Dưới 1,000,000đ
+
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="refine-item3">
+                                                <label class="label-checkbox mb-0" for="refine-item3">
+                                                    1,000,000đ - 3,000,000đ
+
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="refine-item5">
+                                                <label class="label-checkbox mb-0" for="refine-item5">
+                                                    3,000,000đ - 5,000,000đ
+
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="refine-item7">
+                                                <label class="label-checkbox mb-0" for="refine-item7">
+                                                    Trên 5,000,000đ
+
+                                                </label>
+                                            </li>
+                                        </ul>
+
+                                    </fieldset>
+                                </div><!--/ .table_cell -->
+                                <!-- - - - - - - - - - - - - - Lọc giá - - - - - - - - - - - - - - - - -->
+                                <div class="table_cell">
+                                    <fieldset>
+                                        <legend>Nâng cao</legend>
+                                        <ul class="checkboxes_list">
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="sortbybs"  />
+                                                <label class="label-checkbox mb-0" for="sortbybs">
+                                                    Bán chạy nhất
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="sortbyDiscount">
+                                                <label class="label-checkbox mb-0" for="sortbyDiscount">
+                                                    Giảm giá
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="sortbypricedown">
+                                                <label class="label-checkbox mb-0" for="sortbypricedown">
+                                                    Giá: Giảm dần
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="sortbypriceup">
+                                                <label class="label-checkbox mb-0" for="sortbypriceup">
+                                                    Giá: Tăng dần
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="pricedownbs">
+                                                <label class="label-checkbox mb-0" for="pricedownbs">
+                                                    Bán chạy và giá giảm dần
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="checkbox" type="checkbox" id="priceupbs">
+                                                <label class="label-checkbox mb-0" for="priceupbs">
+                                                    Bán chạy và giá tăng dần
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </fieldset>
+                                </div><!--/ .table_cell -->
+                            </div><!--/ .table_row -->
+
+                        </div><!--/ .table_layout -->
+                    </form>
+                </div>
+
+            </div>
+            <div class="module latest-product titleLine">
+                    <h3 class="modtitle">Sản phẩm mới</h3>
+                    <div class="modcontent " style="overflow-y:scroll; max-height:380px;">
+                        @await Html.PartialAsync("_ListNewProductsPartialView", lsnewproducts)
+                </div>
+            </div>
+        </div>
+    </aside>
+<!--Right Part End -->
+    </div>
+</main>
+<!-- Main Content Area End Here -->
+@section Scripts{
+   <script>
+        $(document).ready(function () {
+                      
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option').removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Product/Filtter',
+                    dataType: "json",
+                    type: "GET",
+                    data: { CatID: catID },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                            $(".products-list row grid").html("");
+                            $(".products-list row grid").html(results);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: 'Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+            $("#refine-item1").change(function () {
+                if (this.checked) {
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });                   
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#refine-item1").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item1").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductBS1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item1").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductBS/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item1").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/GiamDan1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item1").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceDown/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item1").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/TangDan1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item1").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceUp/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                
+                else if ($("#sortbybs").prop("checked") == false && $("#refine-item1").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false) {
+                    location.reload();
+                }
+            });
+            $("#refine-item3").change(function () {
+                if (this.checked) {
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#refine-item3").prop("checked") == true) {
+
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item3").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductBS3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item3").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductBS/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item3").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/GiamDan3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item3").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceDown/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item3").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/TangDan3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item3").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceUp/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                
+                else if ($("#sortbybs").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false) {
+                    location.reload();
+                }
+            });
+            $("#refine-item5").change(function () {
+                if (this.checked) {
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#refine-item5").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item5").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductBS5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item5").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductBS/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item5").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/GiamDan5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item5").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceDown/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item5").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/TangDan5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item5").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceUp/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                else if ($("#sortbybs").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false) {
+                    location.reload();
+                }
+            });
+            $("#refine-item7").change(function () {
+                if (this.checked) {
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                     $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#refine-item7").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceToAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item7").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductBSAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbybs").prop("checked") == true && $("#refine-item7").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductBS/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item7").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/GiamDan7M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypricedown").prop("checked") == true && $("#refine-item7").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceDown/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item7").is(":checked") == true) {
+                    $.ajax({
+                        url: 'Search/TangDan7M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } else if ($("#sortbypriceup").prop("checked") == true && $("#refine-item7").is(":checked") == false) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceUp/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                else if ($("#sortbybs").prop("checked") == false && $("#refine-item7").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbypriceup").prop("checked") == false) {
+                    location.reload();
+                }
+            });
+
+            $("#sortbybs").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/FindProductBS/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#sortbypriceup").prop({ disabled: false, checked: false });
+                    $("#sortbypricedown").prop({ disabled: false, checked: false });
+                    //add
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    //
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                } if ($("#sortbybs").prop("checked") == false && $("#refine-item7").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceToAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#refine-item5").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } if ($("#sortbybs").prop("checked") == false && $("#refine-item3").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbybs").prop("checked") == false && $("#refine-item1").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                else if ($("#sortbybs").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#sortbypricedown").prop("checked") == false
+                ) {
+                    location.reload();
+                }
+            });
+            //Sort by Discount
+            //sortbyDiscount
+            $("#sortbyDiscount").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/FindProductByDiscount/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#sortbypriceup").prop({ disabled: false, checked: false });
+                    $("#sortbypricedown").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbybs").prop({ disabled: false, checked: false });
+                } if ($("#sortbyDiscount").prop("checked") == false && $("#refine-item7").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceToAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbyDiscount").prop("checked") == false && $("#refine-item5").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } if ($("#sortbyDiscount").prop("checked") == false && $("#refine-item3").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo3M/',
+                        datatype: "json",
+                        type: "POST",
+
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbyDiscount").prop("checked") == false && $("#refine-item1").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                
+                else if ($("#sortbyDiscount").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbypriceup").prop("checked") == false && $("#sortbypricedown").prop("checked") == false
+                ) {
+                    location.reload();
+                }
+            });
+            // END
+            $("#sortbypricedown").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceDown/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#sortbypriceup").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbybs").prop({ disabled: false, checked: false });
+                     //add
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    //
+                } if ($("#sortbypricedown").prop("checked") == false && $("#refine-item7").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceToAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbypricedown").prop("checked") == false && $("#refine-item5").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbypricedown").prop("checked") == false && $("#refine-item3").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function(results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbypricedown").prop("checked") == false && $("#refine-item1").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                else if ($("#sortbypricedown").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbybs").prop("checked") == false && $("#sortbypriceup").prop("checked") == false
+                ) {
+                   location.reload();
+                }
+            });
+            $("#sortbypriceup").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceUp/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#sortbypricedown").prop({ disabled: false, checked: false });
+                    $("#sortbybs").prop({ disabled: false, checked: false });
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                     //add
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    //
+                } if ($("#sortbypriceup").prop("checked") == false && $("#refine-item7").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceToAll/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbypriceup").prop("checked") == false && $("#refine-item5").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo5M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                } if ($("#sortbypriceup").prop("checked") == false && $("#refine-item3").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo3M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                if ($("#sortbypriceup").prop("checked") == false && $("#refine-item1").prop("checked") == true) {
+                    $.ajax({
+                        url: 'Search/FindProductByPriceTo1M/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+
+                }
+                else if ($("#sortbypriceup").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbybs").prop("checked") == false
+                ) {
+                    location.reload();
+                }
+            });
+            $("#pricedownbs").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/BSAndGiamDan/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#sortbypricedown").prop({ disabled: false, checked: false });
+                    $("#sortbypriceup").prop({ disabled: false, checked: false });
+                    $("#priceupbs").prop({ disabled: false, checked: false });
+                    $("#sortbybs").prop({ disabled: false, checked: false });
+                     //add
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    //
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+
+                }
+                else if ($("#sortbypriceup").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbybs").prop("checked") == false && $("#pricedownbs").prop("checked") == false
+                ) {
+                    location.reload();
+                }
+            });
+            $("#priceupbs").change(function () {
+                if (this.checked) {
+                    $.ajax({
+                        url: 'Search/BSAndTangDan/',
+                        datatype: "json",
+                        type: "POST",
+                        async: true,
+                        success: function (results) {
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                    $("#sortbypricedown").prop({ disabled: false, checked: false });
+                    $("#sortbypriceup").prop({ disabled: false, checked: false });
+                    $("#pricedownbs").prop({ disabled: false, checked: false });
+                    $("#sortbybs").prop({ disabled: false, checked: false });
+                     //add
+                    $("#sortbyDiscount").prop({ disabled: false, checked: false });
+                    //
+                    $("#refine-item1").prop({ disabled: false, checked: false });
+                    $("#refine-item3").prop({ disabled: false, checked: false });
+                    $("#refine-item5").prop({ disabled: false, checked: false });
+                    $("#refine-item7").prop({ disabled: false, checked: false });
+
+                }
+                else if ($("#sortbypriceup").prop("checked") == false && $("#refine-item5").prop("checked") == false && $("#refine-item3").prop("checked") == false && $("#refine-item1").prop("checked") == false
+                    && $("#refine-item7").prop("checked") == false && $("#sortbypricedown").prop("checked") == false && $("#sortbybs").prop("checked") == false && $("#priceupbs").prop("checked") == false
+                ) {
+                    location.reload();
+                }
+            });            
+        });
+            
+        /*$(document).ready(function () {
+            var checkboxes = $("input[type='checkbox']"),
+                submitButt = $("input[type='submit']");
+
+            checkboxes.on("click", function () {
+                var $this = $(this);
+
+                localStorage.setItem($this.attr("id"), $this.prop("checked"));
+            });
+
+            submitButt.on("click", function () {
+                localStorage.clear();
+            });
+
+            for (var i = 0, l = localStorage.length; i < l; i++) {
+                var key = localStorage.key(i),
+                    value = localStorage.getItem(key);
+
+                $("#" + key).prop("checked", value === "true");
+            }
+             
+        });*/
+
+   </script>                
+}
+
+ <style>
+    .sold_out{
+    font-weight: bolder;
+    color: #F4A137;
+    font-size: 3em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    }
+
+
+</style>

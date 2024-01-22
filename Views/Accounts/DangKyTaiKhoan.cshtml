@@ -1,0 +1,93 @@
+﻿@model OnlineMarket.ModelViews.RegisterVM
+
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<!-- Main Container  -->
+<div class="">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="/tai-khoan-cua-toi.html">Account</a></li>
+        <li><a href="dang-ky.html">Register</a></li>
+    </ul>
+
+    <div class="row">
+        <div id="content" class="col-sm-12">
+            <h2 class="title">Đăng ký tài khoản</h2>
+            <p>If you already have an account with us, please login at the <a href="dang-nhap.html">Đăng nhập</a>.</p>
+            <form asp-action="DangKyTaiKhoan" class="form-horizontal account-register clearfix">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <fieldset id="account">
+                    <legend>Thông tin cá nhân</legend>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-firstname">Họ và tên</label>
+                        <div class="col-sm-10">
+                            <input type="text" asp-for="FullName" placeholder="Họ và tên" class="form-control">
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-email">E-Mail</label>
+                        <div class="col-sm-10">
+                            <input type="email" asp-for="Email" placeholder="E-Mail" class="form-control">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-telephone">Số điện thoại</label>
+                        <div class="col-sm-10">
+                            <input type="tel" asp-for="Phone" placeholder="Số điện thoại" class="form-control">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Your Password</legend>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-password">Mật khẩu</label>
+                        <div class="col-sm-10">
+                            <input type="password" asp-for="Password" placeholder="Mật khẩu" class="form-control">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-confirm">Xác nhận mật khẩu</label>
+                        <div class="col-sm-10">
+                            <input type="password" asp-for="ConfirmPassword" placeholder="Mật khẩu" class="form-control">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="buttons">
+                    <div class="pull-right">
+                        <input type="submit" value="Đăng ký" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- //Main Container -->

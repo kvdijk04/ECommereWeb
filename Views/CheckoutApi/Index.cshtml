@@ -1,0 +1,137 @@
+﻿@model List<OnlineMarket.ModelViews.CartItem>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<section>
+    <div id="content" class="col-sm-12">
+        <img src="~/assets/Stripe.png" width="250px" height="150px" class="pull-left" />
+        <h2 class="header" style="color:mediumpurple;font-weight:bold">THANH TOÁN BẰNG STRIPE</h2>
+        <h2 class="title">Giỏ hàng</h2>
+        <strong>Vui lòng kiểm tra lại giỏ hàng trước khi thanh toán trực tuyến</strong>
+        <div class="table-responsive form-group">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td class="text-center">Hình ảnh</td>
+                        <td class="text-left">Tên sản phẩm</td>
+                        <td class="text-left">Số lượng</td>
+                        <td class="text-right">Đơn Giá </td>
+                        <td class="text-right">Thành tiền</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            string url = $"/{item.product.Alias}-{item.product.ProductId}";
+                            <tr>
+                                <td class="text-center">
+                                    <a href="javascript:void(0)">
+                                        <img src="~/images/products/@item.product.Thumb" alt="@item.product.Title" class="img-thumbnail" style="width:235px;height:235px" />
+                                    </a>
+                                </td>
+                                <td class="text-left"><a href="@url">@item.product.ProductName</a></td>
+                                <td class="text-left" width="200px">
+                                    <div class="quantity">
+                                        <input min-width="50px" data-mahh="@item.product.ProductId" data-dongia="@item.product.Price" class="cartItem form-control" value="@item.quantity" min="1" type="number" readonly>
+                                    </div>
+                                </td>
+                                <td class="product-price" style="text-align:center; font-weight:bold;">
+                                        @if(item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                        {
+                                            <span class="amount">
+                                                @((item.product.Discount / 24.80).Value.ToString("#,##0")) USD
+                                                </span>
+                                            <br>
+                                            <span class="price-old" style=" -webkit-text-decoration-line: line-through; text-decoration-line: line-through; font-weight:normal;">@((item.product.Price / 24.80).Value.ToString("#,##0")) USD</span>
+                                        }
+                                        else{
+                                            <span class="amount">@((item.product.Price / 24.80).Value.ToString("#,##0")) USD</span>
+                                        }
+
+                                    </td>
+                              
+                                    <td class="product-subtotal" style="text-align:center; font-weight:bold;">
+                                        @if (item.product.Discount > 0 && item.product.Discount < item.product.Price)
+                                        {
+                                            <span class="amount">@(((item.product.Discount.Value * item.quantity) /24.80).ToString("#,##0")) USD</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="amount">@(((item.product.Price.Value * item.quantity) /24.80).ToString("#,##0")) VNĐ</span>
+                                        }
+                                    </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <strong>Giỏ hàng rỗng</strong>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-8">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                             <td class="text-right" style="font-weight:bold;">
+                                    <strong>Thành tiền:</strong>
+                                </td>
+                                <td class="text-right">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        <span class="amount">@Model.Sum(x => (x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity) /24.80).ToString("#,##0") USD</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="amount">0 USD</span>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <strong>Tổng cộng:</strong>
+                                </td>
+                                <td class="text-right" style="font-weight:bold;">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        <span class="amount">@Model.Sum(x => (x.product.Discount > 0 && x.product.Discount < x.product.Price ? x.product.Discount.Value * x.quantity : x.product.Price.Value * x.quantity) /24.80).ToString("#,##0") USD</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="amount">0 USD</span>
+                                    }
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <form action="/create-checkout-session.html" method="POST" class="pull-right">
+            <button type="submit" id="checkout-button" class="btn btn-primary">Thanh toán Stripe</button>
+        </form>
+</section>
+
+
+             

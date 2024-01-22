@@ -1,0 +1,64 @@
+﻿@model List<OnlineMarket.Models.Product>
+@if (Model != null)
+{
+     <div class="modcontent " itemscope itemtype="http://schema.org/Product">
+        @foreach(var item in Model)
+        {
+        string url = $"/{item.Alias}-{item.ProductId}";
+        string urld = $"san-pham/xem-nhanh/{item.Alias}-{item.ProductId}";
+            <div class="product-latest-item">
+                <div class="media">
+                    <div class="media-left" >
+                        @if (item.UnitslnStock == 0)
+                        {
+                            <a href="@url" itemprop="url">
+                                <img itemprop="image" style="width: 80px; height: 100px; backgorund black; opacity:0.5;" class="img-responsive" src="~/images/products/@item.Thumb" alt="@item.Title">
+                            </a>
+                        }
+                        else{
+                             <a href="@url" itemprop="url">
+                               <img itemprop="image" style="width: 80px; height: 100px;" class="img-responsive" src="~/images/products/@item.Thumb" alt="@item.Title">
+                             </a>
+                        }
+                    </div>
+                    <div class="media-body">
+                        <div class="caption">
+                            <h4 itemprop="name">
+                                <a href="@url" itemprop="url">@item.ProductName 
+                                @if (item.UnitslnStock == 0)
+                                {
+                                    <span class="sold_out_PartialView" style="color:#F4A137; font-weight: bold; font-size:14px;"> Hết hàng</span>
+                                }
+                                </a>
+                            </h4>
+
+                            <div class="price">
+                            @if (item.Discount > 0  && item.Discount < item.Price)
+                            {
+                               <span class="label label-percent" style="font-size:14px;">@item.Discount.Value.ToString("#,##0") VNĐ</span>
+                               <span class="price-old">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                            }
+                            else{
+                               <div class="price" itemscope itemtype="http://schema.org/Offer">
+                                   <span class="price-new" itemprop="price">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                               </div>
+                            }
+                            </div>
+                            <div class="ratings"itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                                <div class="rating-box">
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>    
+}

@@ -1,0 +1,149 @@
+﻿
+@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<OnlineMarket.Models.Comment>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Phản hồi khách hàng" + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Orders List</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="AdminComments" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <span class="breadcrumb-item active">Danh sách phản hồi</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <i class="prefix-icon anticon-search opacity-04"></i>
+                            <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm theo tên sản phẩm" />
+                        </div>
+                        <div class="input-affix m-v-10">
+                            <i class="prefix-icon anticon-search opacity-04"></i>
+                            <input id="id" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm theo điểm" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <select class="custom-select" id="txtCatID" name="txtCatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                                <option selected>Chọn danh mục</option>
+                                <option value="0">Chọn tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table" id="records_table">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Đánh giá</th>
+                        <th scope="col">Ngày/ giờ</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.CommentId</th>
+                                <td>@item.FullName</td>
+                                <td>@item.Phone</td>
+                                <th scope="row">@item.Email</th>
+                                <td>@item.Product.ProductName</td>
+                                <td>@item.Rating /10</td>
+                                <th scope="row">@item.CommentedOn</th>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.CommentId" class="btn btn-secondary btn-tone m-r-5">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.CommentId" class="btn btn-danger btn-tone m-r-5">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div aria-label="Page navigation example">
+                <ul class="pagination">
+                    <pager class="pager-container" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" list="@Model" asp-area="Admin" asp-controller="AdminComments" asp-action="Index" asp-route-CatID="@ViewBag.CurrentCateID"></pager>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+        jQuery("#txtCatID").change(function () {
+            var pID = jQuery(this).children(":selected").attr("value");
+            pID = parseFloat(pID);
+            $('#txtCatID option').removeAttr('selected');
+            $("#txtCatID > [value=" + pID + "]").attr("selected", "true");
+            $.ajax({
+                url: '/Admin/AdminComments/Filtter',
+                dataType: "json",
+                type: "GET",
+                data: { PID: pID },
+                async: true,
+                success: function (results) {
+                    if (results.status == "success") {
+                        window.location.href = results.redirectUrl;
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Admin/Search/FindReview/',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        $("#id").keyup(function () {
+            var strkeyword = $('#id').val();
+            $.ajax({
+                url: '/Admin/Search/FindReviewRate/',
+                datatype: "json",
+                type: "POST",
+                data: { id: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    });
+    </script>
+}

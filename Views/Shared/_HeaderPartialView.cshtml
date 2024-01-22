@@ -1,0 +1,190 @@
+﻿<!-- Header Top -->
+<div class="header-top ">
+    <div class="container">
+        <div class="row">
+			<div class="header-top-left form-inline col-sm-6 col-xs-12 ">
+				<div class="form-group languages-block ">
+					<form action="index.html" method="post" enctype="multipart/form-data" id="bt-language">
+						<a class="btn btn-xs dropdown-toggle" data-toggle="dropdown">
+						</a>
+
+					</form>
+				</div>
+
+				<div class="form-group currencies-block">
+					<form action="index.html" method="post" enctype="multipart/form-data" id="currency">
+						<a class="btn btn-xs dropdown-toggle" data-toggle="dropdown">
+						</a>
+						<ul class="dropdown-menu btn-xs">
+
+						</ul>
+					</form>
+				</div>
+			</div>
+            <div class="header-top-right collapsed-block text-right  col-sm-6 col-xs-12 ">
+                <h5 class="tabBlockTitle visible-xs">More<a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+                <div class="tabBlock" id="TabBlock-1">
+                    <ul class="top-link list-inline">
+                        <li class="account" id="my_account">
+                            <a href="#" title="Tài khoản" class="btn btn-xs dropdown-toggle" data-toggle="dropdown"> <span>Tài khoản</span> <span class="fa fa-angle-down"></span></a>
+                            <ul class="dropdown-menu ">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a class="fa fa-user" href="/tai-khoan-cua-toi.html">Tài khoản của tôi</a></li>
+                                }
+                                else
+                                {
+                                   <li><a href="dang-ky.html"><i class="fa fa-user"></i> Đăng ký</a></li>
+                                   <li><a href="dang-nhap.html"><i class="fa fa-pencil-square-o"></i> Đăng nhập</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="checkout"><a href="checkout.html" class="top-link-checkout" title="Checkout"><span>Thanh toán</span></a></li>
+                        <li class="login"><a href="cart.html" title="Shopping Cart"><span>Giỏ hàng</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Header Top -->
+<!-- Header center -->
+<div class="header-center left">
+    <div class="container">
+        <div class="row">
+            <!-- Logo -->
+            <div class="navbar-logo col-md-3 col-sm-12 col-xs-12">
+                <a href="index.html"><img src="~/assets/image/demo/logos/theme_logo.png" title="Your Store" alt="Your Store" /></a>
+            </div>
+            <!-- //end Logo -->
+            <!-- Secondary menu -->
+            <div class="col-md-2 col-sm-5 col-xs-12 shopping_cart pull-right">
+                <!--cart-->
+                <div id="cart" class=" btn-group btn-shopping-cart">
+                    <a class="top_cart dropdown-toggle" data-toggle="dropdown" id="numberCart">
+                        @await Component.InvokeAsync("NumberCart")
+                    </a>
+                    <div class="dropdown-backdrop"></div>
+                    <ul class="tab-content content dropdown-menu pull-right shoppingcart-box" id="miniCart" role="menu">
+                        @await Component.InvokeAsync("HeaderCart")
+                    </ul>
+                </div>
+
+                <!--//cart-->
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- //Header center -->
+<!-- Header Bottom -->
+<div class="header-bottom">
+    <div class="container">
+        <div class="row">
+
+            <div class="sidebar-menu col-md-3 col-sm-6 col-xs-12 ">
+                <div class="responsive so-megamenu ">
+                    <div class="so-vertical-menu no-gutter ">
+                        <nav class="navbar-default">
+
+                            <div class="container-megamenu vertical">
+                                <div id="menuHeading">
+                                    <div class="megamenuToogle-wrapper">
+                                        <div class="megamenuToogle-pattern">
+                                            <div class="container">
+                                                <div>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </div>
+                                                 Danh mục
+                                                <i class="fa pull-right arrow-circle fa-chevron-circle-up"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="navbar-header">
+                                    <button type="button" id="show-verticalmenu" data-toggle="collapse" class="navbar-toggle fa fa-list-alt">
+                                    </button>
+                                    Danh mục
+                                </div>
+                                <div class="vertical-wrapper">
+                                    <span id="remove-verticalmenu" class="fa fa-times"></span>
+                                    <div class="megamenu-pattern">    
+                                            @await Component.InvokeAsync("Categories")
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main menu -->
+            <div class="megamenu-hori header-bottom-right  col-md-9 col-sm-6 col-xs-12 ">
+                <div class="responsive so-megamenu ">
+                    <nav class="navbar-default">
+                        <div class=" container-megamenu  horizontal">
+                            <div class="navbar-header">
+                                <button type="button" id="show-megamenu" data-toggle="collapse" class="navbar-toggle">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                
+                            </div>
+
+                            <div class="megamenu-wrapper">
+                                <span id="remove-megamenu" class="fa fa-times"></span>
+                                <div class="megamenu-pattern">
+                                    <div class="container">
+                                        <ul class="megamenu " data-transition="slide" data-animationtime="250">
+                                            <li class="home hover">
+                                                <a href="/">Home</a>
+                                            </li>
+                                            <li class="">
+                                                <p class="close-menu"></p>
+                                                <a href="shop.html" class="clearfix">
+                                                    <strong>Sản phẩm</strong>
+                                                    <img class="label-hot" src="~/assets/image/theme/icons/hot-icon.png" alt="icon items">
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <p class="close-menu"></p>
+                                                <a href="blogs.html" class="clearfix">
+                                                    <strong>Tin tức</strong>
+                                                    <span class="label"></span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <p class="close-menu"></p>
+                                                <a href="about.html" class="clearfix">
+                                                    <strong>Cửa hàng</strong>
+                                                    <span class="label"></span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <p class="close-menu"></p>
+                                                <a href="contact.html" class="clearfix">
+                                                    <strong>Liên hệ</strong>
+                                                    <span class="label"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- //end Main menu -->
+        </div>
+    </div>
+</div>
+
+<!-- Navbar switcher -->
+<!-- //end Navbar switcher -->

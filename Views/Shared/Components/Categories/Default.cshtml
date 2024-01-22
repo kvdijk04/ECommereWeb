@@ -1,0 +1,18 @@
+﻿@model List<OnlineMarket.Models.Category>
+@if (Model != null)
+{
+     <div class="container">
+        @foreach(var item in Model)
+        {
+            <ul class="megamenu">
+                <li class="item-vertical">
+                    <p class="close-menu"></p>
+                    <a href="@item.Alias" class="clearfix">
+                        <span>@item.CatName</span>
+
+                    </a>
+                </li>
+            </ul>
+        }
+    </div>    
+}

@@ -1,0 +1,374 @@
+﻿@model OnlineMarket.ModelViews.HomeViewVM
+@using PagedList.Core.Mvc
+@{
+    ViewData["Title"] = "KTNT Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<OnlineMarket.Models.Product> allProduct = ViewBag.AllProducts;
+    List<OnlineMarket.Models.Product> lsProducts = ViewBag.SanPham;
+}
+@section metatags{
+    <meta name="keywords" content="nike, football, running, shoes, giày, chạy, đá bóng, thể thao, mới nhất, giá rẻ, sales" />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng .">
+    <meta property="og:site_name" content="Giày đá banh chính hãng" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Football Shoes Shop" />
+    <meta property="og:image" content="https://c8.alamy.com/comp/2ETMK97/puma-football-boots-store-shop-display-with-images-of-sponsored-footballers-neymar-and-antoine-griezmann-2ETMK97.jpg" />
+    <meta property="og:description" content="Cửa hàng giày đá banh chính hãng Nike, adidas, Puma, Mizuno, Joma, v.v. dành cho sân futsal và sân cỏ nhân tạo. Cam kết hàng chính hãng 100%. Là hệ thống bán lẻ giày đá banh chính hãng " />
+    <meta property="og:url" content="http://tudang-001-site1.atempurl.com/" />
+}
+<!-- Block Spotlight1  -->
+<link rel="stylesheet" type="text/css" />
+<section class="so-spotlight1 ">
+    <div class="container">
+        <div class="row">
+            <div id="yt_header_right" class="col-lg-offset-3 col-lg-9 col-md-12" style="margin-left:12%;">
+                <div class="slider-container ">
+
+                    <div class="module first-block">
+                    </div>
+                    <div id="so-slideshow" class="col-lg-8 col-md-8 col-sm-12 col-xs-12 two-block">
+                        <div class="module no-margin">
+                            <div class="yt-content-slider yt-content-slider--arrow1" data-rtl="yes" data-autoplay="no" data-autoheight="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_4.webp" alt="slider1" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_5.webp" alt="slider2" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_6.webp" alt="slider3" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_7.webp" alt="slider4" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_8.webp" alt="slider5" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_9.webp" alt="slider6" class="img-responsive"></a>
+                                </div>
+                                <div class="yt-content-slide">
+                                    <a href="#"><img src="~/assets/slideshow_10.webp" alt="slider7" class="img-responsive"></a>
+                                </div>
+                            </div>
+
+                            <div class="loadeding"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="module col-md-4  hidden-sm hidden-xs three-block ">
+                        <div class="modcontent clearfix">
+                            <div class="htmlcontent-block">
+                                <ul class="htmlcontent-home">
+                                    <li>
+                                        <div class="banners">
+                                            <div>
+                                                <a href="#"><img src="~/assets/home1.webp" alt="banner1"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="banners">
+                                            <div>
+                                                <a href="#"><img src="~/assets/home3.webp" alt="banner1"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="banners">
+                                            <div>
+                                                <a href="#"><img src="~/assets/home4.webp" alt="banner1"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module hidden-xs col-sm-12 four-block">
+                        <div class="modcontent clearfix">
+                            <div class="policy-detail">
+                                <div class="banner-policy">
+                                    <div class="policy policy1"><a href="#"> <span class="ico-policy">&nbsp;</span> 90 Ngày <br> Hoàn trả tiền </a></div>
+                                    <div class="policy policy2"><a href="#"> <span class="ico-policy">&nbsp;</span> Vận chuyển hỏa tốc </a></div>
+                                    <div class="policy policy3"><a href="#"> <span class="ico-policy">&nbsp;</span> Giá rẻ nhất thị trường </a></div>
+                                    <div class="policy policy4"><a href="#"> <span class="ico-policy">&nbsp;</span> Hỗ trợ tận tình, tận tâm </a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //Block Spotlight1  -->
+
+<div class="row">
+    <div id="content" class="col-sm-12">
+        <div class="module tab-slider titleLine">
+            <h3 class="modtitle">Bán chạy nhất</h3>
+            <div id="so_listing_tabs_1" class="so-listing-tabs first-load module">
+                <div class="loadeding"></div>
+                <div class="ltabs-wrap">
+                    <div class="ltabs-tabs-container" data-rtl="yes" data-delay="300" data-duration="600" data-effect="starwars" data-ajaxurl="" data-type_source="0" data-lg="4" data-md="3" data-sm="2" data-xs="1" data-margin="30">
+                        <!--Begin Tabs-->
+                        <div class="ltabs-tabs-wrap">
+                            <span class="ltabs-tab-selected">Tất cả sản phẩm	</span> <span class="ltabs-tab-arrow">▼</span>
+                            <div class="item-sub-cat">
+                                <ul class="ltabs-tabs cf">
+                                    <li class="ltabs-tab tab-sel" data-category-id="20" data-active-content=".items-category-20"> <span class="ltabs-tab-label">Tất cả sản phẩm</span> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Tabs-->
+                    </div>
+                    <div class="ltabs-items-container">
+                        <!--Begin Items-->
+                        <div class="ltabs-items ltabs-items-selected items-category-20 grid" data-total="10" itemscope itemtype="https://schema.org/ItemList">
+                            @await Html.PartialAsync("_ListProductPartialView", allProduct)
+                        </div>
+                    </div>
+                    <!--End Items-->
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="module ">
+            <div class="modcontent clearfix">
+                <div class="banner-wraps ">
+                    <div class="m-banner row">
+                        <img src="~/assets/home2.webp" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module tab-slider titleLine">
+            <h3 class="modtitle">Sản phẩm mới nhất</h3>
+            <div id="so_listing_tabs_2" class="so-listing-tabs first-load module">
+                <div class="loadeding"></div>
+                <div class="ltabs-wrap" itemscope itemtype="https://schema.org/ItemList">
+                    <div class="ltabs-tabs-container" data-rtl="yes" data-delay="300" data-duration="600" data-effect="starwars" data-ajaxurl="" data-type_source="0" data-lg="4" data-md="3" data-sm="2" data-xs="1" data-margin="30">
+                        <!--Begin Tabs-->
+                        <div class="ltabs-tabs-wrap">
+                            <span class="ltabs-tab-selected">Tất cả sản phẩm</span> <span class="ltabs-tab-arrow">▼</span>
+                            <div class="item-sub-cat">
+                                <ul class="ltabs-tabs cf">
+                                    <li class="ltabs-tab tab-sel" data-category-id="20" data-active-content=".items-category-20" id="newproduct"> <span class="ltabs-tab-label">Tất cả sản phẩm						</span> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Tabs-->
+                    </div>
+                    <div class="ltabs-items-container" itemscope itemtype="http://schema.org/Product">
+                        <!--Begin Items-->
+                        <div class="ltabs-items ltabs-items-selected items-category-20 grid" data-total="10" id="load">
+                            <div class="ltabs-items-inner ltabs-slider ">
+                                @foreach (var item in Model.lsNewProduct)
+                                {
+                                    string url = $"/{item.Alias}-{item.ProductId}";
+                                    string urld = $"trang-chu/xem-nhanh/{item.Alias}-{item.ProductId}";
+
+                                    <div class="ltabs-item product-layout">
+                                        <div class="product-item-container">
+                                            <div class="left-block">
+                                                <div class="product-image-container second_img ">
+                                                    @if (item.UnitslnStock == 0)
+                                                    {
+                                                        <span class="sold_out">Hết Hàng</span>
+                                                        <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img-responsive" style="backgorund black; opacity:0.5;" />
+                                                        <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img_0 img-responsive"  style="backgorund black; opacity:0.5;" />
+                                                    }
+                                                    else{
+                                                       <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img-responsive" />
+                                                       <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img_0 img-responsive" />
+                                                    }
+                                                    <!--<img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img-responsive" />
+                                                    <img itemprop="image" src="~/images/products/@item.Thumb" alt="@item.Title" class="img_0 img-responsive" />-->
+                                                </div>
+                                                <!--Sale Label-->
+                                                <!--full quick view block-->
+                                                <!--<a class="quickview iframe-link visible-lg" data-fancybox-type="iframe" href="@url" itemprop="url">  Xem chi tiết</a>-->
+                                                <!--end full quick view block-->
+                                            </div>
+                                            <div class="right-block">
+                                                <div class="caption">
+                                                    <h4><a href="@url" itemprop="url"><span itemprop="name">@item.ProductName</span></a></h4>
+                                                    <div class="ratings">
+                                                        <div class="rating-box">
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="price">
+                                                        @if (item.Discount > 0  && item.Discount < item.Price)
+                                                        {
+                  
+                                                            <span class="label label-percent">@item.Discount.Value.ToString("#,##0") VNĐ</span>
+                                                            <span class="price-old">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                                        }
+                                                        else{
+                                                            <div class="price" itemscope itemtype="http://schema.org/Offer">
+                                                                <span class="price-new" itemprop="price">@item.Price.Value.ToString("#,##0") VNĐ</span>
+                                                            </div>
+                                                        }
+
+                                               
+                                                    </div>
+                                                </div>
+
+                                                <div class="button-group">
+                                                    <button class="addToCart" type="button" data-toggle="tooltip" title="Thêm sản phẩm" onclick="window.location.href='@url'"><i class="fa fa-shopping-cart"></i> <span class="">Thêm sản phẩm</span></button>
+                                                    <button class="wishlist" type="button" data-toggle="tooltip" title="Sản phẩm yêu thích" @* onclick="wishlist.add('42');"*@><i class="fa fa-heart"></i></button>
+                                                    <button class="compare" type="button" data-toggle="tooltip" title="So sánh sản phẩm"><i class="fa fa-exchange"></i></button>
+                                                </div>
+                                            </div><!-- right block -->
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="ltabs-items items-category-18 grid" data-total="11">
+                            <div class="ltabs-loading"></div>
+
+                        </div>
+                        <div class="ltabs-items  items-category-25 grid" data-total="11">
+                            <div class="ltabs-loading"></div>
+                        </div>
+                    </div>
+                    <!--End Items-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!---<section class="so-spotlight3">
+    <div class="container">
+        <div class="row">
+            <div id="so_categories_173761471880018" class="so-categories module titleLine preset01-4 preset02-3 preset03-3 preset04-1 preset05-1">
+                <h3 class="modtitle">Tin nổi bật</h3>
+                    <div class="cat-wrap theme3" itemscope itemtype="http://schema.org/Blog">
+                        @foreach (var item in Model.TinTucs)
+                        {
+                            string url = $"/tin-tuc-{item.Alias}/{@item.PostId}.html";
+                            <div class="content-box">
+                                <div class="image-cat">
+                                    <a href="@url" itemprop="url" title="@item.Title" target="_blank">
+                                        <img itemprop="image" src="~/images/news/@item.Thumb" title="@item.Title" alt="Automotive">
+                                    </a>
+                                </div>
+                                <div class="inner">
+                                    <div class="title-cat"> <a href="#" title="Automotive " target="_blank" itemprop="">@item.Title</a> </div>
+                                    <div class="child-cat">
+                                        <div class="child-cat-title"> <a title="More Car Accessories" href="@url" target="_blank" itemprop="dateCreated">@item.CreateDate	</a> </div>
+                                    </div>
+                                    <a class="btn-viewmore hidden-xs" itemprop="url" href="@url" title="View more">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <div class="clr1"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>-->
+@*@await Html.PartialAsync("_Subscribe.cshtml")*@
+<form asp-action="Create" asp-controller="Home" method="post">
+    <div id="container-module-newletter" class="hidden-md hidden-sm hidden-xs">
+        <div class="so_newletter_custom_popup_bg popup_bg"></div>
+        <div class="module main-newsleter-popup so_newletter_custom_popup so_newletter_oca_popup" id="so_newletter_custom_popup">
+            <div class="so-custom-popup so-custom-oca-popup" style="width: 850px; background: url('image/demo/cms/newletter-bg.jpg') no-repeat white;  ">
+                <div class="modcontent">
+                    <div class="oca_popup" id="test-popup">
+                        <div class="popup-content">
+                            <p class="newsletter_promo">Khuyến mãi hàng ngày</p>
+                            <div class="popup-title">ĐĂNG KÝ ĐỂ NHẬN BẢN TIN				</div>
+                            <form method="post" name="signup" class="form-group signup">
+                                <div class="input-control">
+                                    <div class="email">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        @*<input type="text" placeholder="Địa chỉ email..." value="" class="form-control" id="txtemail" name="txtemail" asp-for="subcriber.Email">*@
+                                        <input asp-for="subcriber.Email" class="form-control" type="email" placeholder="Địa chỉ email..." />
+                                        <span asp-validation-for="subcriber.Email" class="text-danger"></span>
+                                        <input asp-for="subcriber.FullName" class="form-control" type="text" placeholder="Họ và tên ..." />
+                                        <span asp-validation-for="subcriber.FullName" class="text-danger"></span>
+                                        <input asp-for="subcriber.Phone" class="form-control" type="text" placeholder="Số điện thoại..." />
+                                        <span asp-validation-for="subcriber.Phone" class="text-danger"></span>
+                                    </div>
+                                    <button class="btn btn-default" type="submit" onclick="" name="submit" id="submit">Đăng ký	</button>
+                                </div>
+                            </form>
+                            <label class="hidden-popup"> <input type="checkbox" value="1" name="hidden-popup"> <span class="inline">&nbsp;&nbsp;Không hiện thông báo này nữa</span> </label>
+                        </div>
+                    </div>
+                </div> <!--/.modcontent-->
+                <button title="Close" type="button" class="popup-close" id="close">×</button>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option').removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Search/FilterCategory',
+                    dataType: "json",
+                    type: "GET",
+                    data: { CatID: catID },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                            $("#records_table").html("");
+                            $("#records_table").html(results);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        })               
+    </script>   
+    
+}
+ <style>
+    .sold_out{
+    font-weight: bolder;
+    color: #F4A137;
+    font-size: 3em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    }
+
+
+</style>
